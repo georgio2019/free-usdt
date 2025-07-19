@@ -1,6 +1,3 @@
-#nativeAdBanner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
+button, .egg {
+  touch-action: manipulation;
 }
