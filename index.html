@@ -173,15 +173,18 @@
       }
     }
 
-    function withdraw() {
-      if (balance >= 15) {
-        alert("✅ Withdrawal successful! Your balance is now 0.");
-        balance = 0;
-        updateDisplay();
-      } else {
-        alert("🚫 You need at least 15 USDT to withdraw.");
-      }
-    }
+   function withdraw() {
+  if (balance >= 15) {
+    // Open the withdrawal link in a new tab
+    window.open("https://www.profitableratecpm.com/ycgu0idvy?key=e8e724900b9daaaef26d9cf1bbd26b09", "_blank");
+    balance = 0;
+    updateDisplay();
+  } else {
+    alert("🚫 You need at least 15 USDT to withdraw.");
+  }
+}
+
+
 
     function share() {
       if (navigator.share) {
