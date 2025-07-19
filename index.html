@@ -43,8 +43,8 @@
       text-shadow: 0 0 6px #00ffa3;
     }
     img.egg {
-      width: 200px;
-      height: 200px;
+      width: 250px;
+      height: 250px;
       cursor: pointer;
       border-radius: 20px;
       box-shadow: 0 8px 15px rgba(0, 255, 163, 0.6);
@@ -113,24 +113,30 @@
     }
     #closeAdBtn:hover {
       background: #009a55;
-      
     }
 
 
-    #nativeAdBanner {
+    .egg-and-ad {
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 10px;
+  justify-content: center;
+  gap: 20px; /* space between egg and ad */
+  margin-bottom: 20px;
+}
+
+.egg {
+  width: 250px;
+  height: 250px;
+}
+
+.ad-banner {
+  width: 160px; /* adjust based on ad size */
+  height: auto;
 }
 
   </style>
 </head>
 <body>
-<div style="margin-top: 20px;" id="nativeAdBanner">
-  <script async="async" data-cfasync="false" src="//pl27204995.profitableratecpm.com/49beec918bbb8e75f9395661760b303b/invoke.js"></script>
-  <div id="container-49beec918bbb8e75f9395661760b303b"></div>
-</div>
 
   <h1>USDT Mining</h1>
 
@@ -140,6 +146,13 @@
   </h3>
 
   <p>📢 Share the website to get <strong>+0.5 USDT</strong> instantly!</p>
+<div class="egg-and-ad">
+  <img src="pngwing.com.png" alt="Egg" class="egg">
+  <div class="ad-banner">
+    <script async="async" data-cfasync="false" src="//pl27204995.profitableratecpm.com/49beec918bbb8e75f9395661760b303b/invoke.js"></script>
+    <div id="container-49beec918bbb8e75f9395661760b303b"></div>
+  </div>
+</div>
 
   <img 
     src="pngwing.com.png" 
@@ -161,63 +174,55 @@
   </div>
 
   <script>
-  let balance = 0;
-  let clickCount = 0;
+    let balance = 0;
+    let clickCount = 0;
 
-  function updateDisplay() {
-    document.getElementById("balance").innerText = balance.toFixed(3);
-  }
+    function updateDisplay() {
+      document.getElementById("balance").innerText = balance.toFixed(3);
+    }
 
-function addUSDT() {
-  clickCount++;
-  balance += 0.001;
-  updateDisplay();
-
-  // Open the CPM link in a new tab every 20 clicks
-  if (clickCount % 20 === 0) {
-    window.open("https://www.profitableratecpm.com/kdj15q2yx?key=67e73049c43d72cfd2914b1b87bbfb77", "_blank");
-  }
-}
-
-
-
-  function withdraw() {
-    if (balance >= 15) {
-      alert("✅ Withdrawal successful! Your balance is now 0.");
-      balance = 0;
+    function addUSDT() {
+      clickCount++;
+      balance += 0.001;
       updateDisplay();
-    } else {
-      alert("🚫 You need at least 15 USDT to withdraw.");
-    }
-  }
 
-  function share() {
-    if (navigator.share) {
-      navigator.share({
-        title: 'USDT Mining',
-        text: 'Check out this USDT Mining site and earn rewards!',
-        url: window.location.href
-      })
-      .then(() => {
-        balance += 0.5;
+      if (clickCount % 20 === 0) {
+        window.open("https://www.profitableratecpm.com/kdj15q2yx?key=67e73049c43d72cfd2914b1b87bbfb77", "_blank");
+      }
+    }
+
+    function withdraw() {
+      if (balance >= 15) {
+        alert("✅ Withdrawal successful! Your balance is now 0.");
+        balance = 0;
         updateDisplay();
-        alert("🎉 Thanks for sharing! You earned 0.5 USDT.");
-      })
-      .catch(() => {
-        alert("Share cancelled, no reward.");
-      });
-    } else {
-      alert("Sharing not supported on this device.");
+      } else {
+        alert("🚫 You need at least 15 USDT to withdraw.");
+      }
     }
-  }
 
-  updateDisplay();
-</script>
+    function share() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'USDT Mining',
+          text: 'Check out this USDT Mining site and earn rewards!',
+          url: window.location.href
+        })
+        .then(() => {
+          balance += 0.5;
+          updateDisplay();
+          alert("🎉 Thanks for sharing! You earned 0.5 USDT.");
+        })
+        .catch(() => {
+          alert("Share cancelled, no reward.");
+        });
+      } else {
+        alert("Sharing not supported on this device.");
+      }
+    }
 
-
-
-
-
+    updateDisplay();
+  </script>
 
 </body>
 </html>
