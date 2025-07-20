@@ -1,60 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>USDT Mining</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #2c5364, #203a43, #0f2027);
+      color: #f0f0f0;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 0.3em;
+      font-weight: 700;
+      font-size: 2.8rem;
+      text-shadow: 0 0 10px #00ffa3, 0 0 20px #00ffa3;
+    }
+
+    h3 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.4rem;
+      margin-bottom: 0.5em;
+      text-shadow: 0 0 8px #00ffa3;
+    }
+
+    h3 img {
+      width: 28px;
+      height: 28px;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 1.5em;
+      color: #a0f9bb;
+      text-shadow: 0 0 6px #00ffa3;
+    }
+
+    img.egg {
+      width: 200px;
+      height: 200px;
+      cursor: pointer;
+      border-radius: 20px;
+      box-shadow: 0 8px 15px rgba(0, 255, 163, 0.6);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    img.egg:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 25px rgba(0, 255, 163, 0.9);
+    }
+
+    img.egg:active {
+      transform: scale(0.95);
+      box-shadow: 0 4px 10px rgba(0, 255, 163, 0.5);
+    }
+
+    button {
+      background: #00ffa3;
+      border: none;
+      border-radius: 30px;
+      padding: 14px 32px;
+      margin-top: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #0f2027;
+      box-shadow: 0 8px 15px rgba(0, 255, 163, 0.3);
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: #00cc7a;
+      box-shadow: 0 12px 25px rgba(0, 204, 122, 0.5);
+      transform: translateY(-3px);
+    }
+
+    button:active {
+      background: #009a55;
+      box-shadow: 0 4px 12px rgba(0, 154, 85, 0.7);
+      transform: translateY(0);
+    }
+  </style>
 </head>
-<body style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f5f5f5;">
+<body>
 
-  <h2>USDT Mining</h2>
-  <p>Balance: <span id="balance">0.000</span> USDT</p>
-  <img id="egg" src="pngwing.com.png" width="150" height="150" style="cursor: pointer;">
+  <h1>USDT Mining</h1>
 
-  <br><br>
+  <h3>
+    💰 Balance: <span id="balance">0.000</span> / 15
+    <img src="data:image/png;base64,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" alt="USDT" />
+  </h3>
 
-  <!-- Watch Ad Button to Double Earnings -->
-  <button onclick="watchAd()" style="padding: 10px 20px; font-size: 16px; background-color: green; color: white; border: none; border-radius: 10px; cursor: pointer;">
-    🎥 Watch Ad to Double Next Click
-  </button>
+  <p>📢 Share the website to get <strong>+0.5 USDT</strong> instantly!</p>
+
+  <img 
+    id="egg"
+    src="pngwing.com.png" 
+    alt="Egg"
+    class="egg"
+  >
+
+  <button onclick="withdraw()">Withdraw</button>
+  <button onclick="share()">Share Website</button>
 
   <script>
     let balance = parseFloat(localStorage.getItem("usdtBalance")) || 0;
-    let boostActive = false;
-
-    const balanceEl = document.getElementById("balance");
+    const balanceDisplay = document.getElementById("balance");
     const egg = document.getElementById("egg");
 
-    function updateUI() {
-      balanceEl.innerText = balance.toFixed(3);
+    function updateDisplay() {
+      balanceDisplay.innerText = balance.toFixed(3);
       localStorage.setItem("usdtBalance", balance.toFixed(3));
     }
 
-    egg.addEventListener("click", () => {
-      const reward = boostActive ? 0.002 : 0.001;
-      balance += reward;
-      updateUI();
-
-      if (boostActive) {
-        boostActive = false; // Reset boost after one use
-        alert("✅ Boost used! You earned 0.002 USDT");
-      }
-    });
-
-    function watchAd() {
-      show_9599968().then(() => {
-        boostActive = true;
-        alert("🎉 You will earn double on your next egg click!");
-      }).catch(() => {
-        alert("❌ Ad failed or skipped.");
-      });
+    function addUSDT() {
+      balance += 0.001;
+      updateDisplay();
     }
 
-    updateUI();
-  </script>
+    function withdraw() {
+      if (balance >= 15) {
+        alert("✅ Withdrawal successful! Your balance is now 0.");
+        balance = 0;
+        updateDisplay();
+      } else {
+        alert("🚫 You need at least 15 USDT to withdraw.");
+      }
+    }
 
-  <!-- Monetag SDK -->
-  <script src="https://pl27204995.profitableratecpm.com/9599968.js"></script>
+    function share() {
+      balance += 0.5;
+      updateDisplay();
+      alert("🎉 Thanks for sharing! You earned 0.5 USDT.");
+    }
+
+    egg.addEventListener("click", addUSDT);
+
+    updateDisplay();
+     <button onclick="showRewardAd()" style="padding: 15px 30px; font-size: 18px; background-color: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer;">
+    🎁 Reward
+  </button>
+
+  <script>
+    function showRewardAd() {
+      show_9599968().then(() => {
+        alert('✅ You have seen an ad and earned a reward!');
+        // You can add your custom reward logic here, like increasing USDT or points
+      }).catch(() => {
+        alert('❌ Ad was skipped or failed.');
+      });
+    }
+  </script>
+  </script>
 
 </body>
 </html>
-
