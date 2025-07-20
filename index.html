@@ -6,7 +6,7 @@
 
   <meta charset="UTF-8" />
 
-<script src='//libtl.com/sdk.js' data-zone='9599968' data-sdk='show_9599968'></script>
+<script src="https://fpyf8.com/88/tag.min.js" data-zone="158320" async data-cfasync="false"></script>
 
 
 </div>
@@ -111,7 +111,30 @@
       justify-content: center;
       align-items: center;
     }
-  
+    #adContent {
+      background: #0f2027;
+      padding: 20px 30px;
+      border-radius: 10px;
+      color: #00ffa3;
+      text-align: center;
+      max-width: 300px;
+      box-shadow: 0 0 15px #00ffa3;
+      font-size: 1.2rem;
+    }
+    #closeAdBtn {
+      margin-top: 20px;
+      padding: 8px 25px;
+      border: none;
+      background: #00cc7a;
+      color: #0f2027;
+      font-weight: 600;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    #closeAdBtn:hover {
+      background: #009a55;
+    }
   </style>
 </head>
 <body>
@@ -136,6 +159,10 @@
   <button onclick="withdraw()">Withdraw</button>
   
  <script>
+  let balance = 0;
+  let clickCount = 0;
+  let adViews = 0;
+
   
 
   function updateDisplay() {
@@ -143,18 +170,10 @@
     document.getElementById("adsWatched").innerText = adViews;
   }
 
-  function addUSDT() {
+ 
     clickCount++;
     balance += 0.001;
-    updateDisplay();
-
-    if (clickCount % 20 === 0 && adViews < adLinks.length) {
-      const adUrl = adLinks[adViews];
-      adViews++;
-      window.open(adUrl, "_blank");
-      updateDisplay();
-    }
-  }
+    
 
   function withdraw() {
     if (balance >= 15) {
