@@ -15,6 +15,7 @@
       background: linear-gradient(135deg, #2c5364, #203a43, #0f2027);
       color: #f0f0f0;
       text-align: center;
+      cursor: pointer; /* show pointer since whole screen clickable */
     }
 
     h1 {
@@ -22,6 +23,7 @@
       font-weight: 700;
       font-size: 2.8rem;
       text-shadow: 0 0 10px #00ffa3, 0 0 20px #00ffa3;
+      pointer-events: none; /* so text clicks go through */
     }
 
     h3 {
@@ -33,6 +35,7 @@
       font-size: 1.4rem;
       margin-bottom: 0.5em;
       text-shadow: 0 0 8px #00ffa3;
+      pointer-events: none;
     }
 
     h3 img {
@@ -45,25 +48,16 @@
       margin-bottom: 1.5em;
       color: #a0f9bb;
       text-shadow: 0 0 6px #00ffa3;
+      pointer-events: none;
     }
 
     img.egg {
       width: 200px;
       height: 200px;
-      cursor: pointer;
       border-radius: 20px;
       box-shadow: 0 8px 15px rgba(0, 255, 163, 0.6);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    img.egg:hover {
-      transform: scale(1.05);
-      box-shadow: 0 12px 25px rgba(0, 255, 163, 0.9);
-    }
-
-    img.egg:active {
-      transform: scale(0.95);
-      box-shadow: 0 4px 10px rgba(0, 255, 163, 0.5);
+      pointer-events: none;
     }
 
     button {
@@ -102,7 +96,7 @@
     <img src="https://cryptologos.cc/logos/tether-usdt-logo.png?v=023" alt="USDT" />
   </h3>
 
-  <p>📢 Click the egg to mine 0.001 USDT!</p>
+  <p>📢 Click anywhere to mine 0.001 USDT and watch a rewarded ad!</p>
 
   <img 
     id="egg"
@@ -112,20 +106,20 @@
   >
 
   <button onclick="withdraw()">Withdraw</button>
-  <button onclick="showRewardAd()">🎁 Watch Ad for Reward</button>
 
   <script>
     let balance = parseFloat(localStorage.getItem("usdtBalance")) || 0;
     const balanceDisplay = document.getElementById("balance");
     const egg = document.getElementById("egg");
+    let adInProgress = false;
 
     function updateDisplay() {
       balanceDisplay.innerText = balance.toFixed(3);
       localStorage.setItem("usdtBalance", balance.toFixed(3));
     }
 
-    function addUSDT() {
-      balance += 0.001;
+    function addUSDT(amount) {
+      balance += amount;
       updateDisplay();
     }
 
@@ -139,24 +133,33 @@
       }
     }
 
-    function showRewardAd() {
-      if(typeof show_9600449 !== 'function') {
+    async function handleClick() {
+      if (adInProgress) return; // prevent multiple clicks during ad
+      adInProgress = true;
+
+      addUSDT(0.001); // Add USDT for click
+
+      if(typeof show_9600449 === 'function') {
+        try {
+          await show_9600449();
+          alert('✅ You have seen an ad and earned +0.25 USDT!');
+          addUSDT(0.25);
+        } catch {
+          alert('❌ Ad was skipped or failed.');
+        }
+      } else {
         alert("Ad SDK not loaded yet.");
-        return;
       }
-      show_9600449().then(() => {
-        alert('✅ You have seen an ad and earned +0.25 USDT!');
-        balance += 0.25;
-        updateDisplay();
-      }).catch(() => {
-        alert('❌ Ad was skipped or failed.');
-      });
+      adInProgress = false;
     }
 
-    egg.addEventListener("click", addUSDT);
     updateDisplay();
 
-    // Init In-App Interstitial ads
+    // Egg image does not respond to clicks directly (pointer-events:none),
+    // whole body listens for click
+    document.body.addEventListener("click", handleClick);
+
+    // Init In-App Interstitial ads in background
     if(typeof show_9600449 === 'function') {
       show_9600449({
         type: 'inApp',
@@ -191,4 +194,5 @@
 
 </body>
 </html>
+
 
