@@ -15,7 +15,6 @@
       background: linear-gradient(135deg, #2c5364, #203a43, #0f2027);
       color: #f0f0f0;
       text-align: center;
-      cursor: default;
     }
 
     h1 {
@@ -23,7 +22,6 @@
       font-weight: 700;
       font-size: 2.8rem;
       text-shadow: 0 0 10px #00ffa3, 0 0 20px #00ffa3;
-      pointer-events: auto;
     }
 
     h3 {
@@ -35,7 +33,6 @@
       font-size: 1.4rem;
       margin-bottom: 0.5em;
       text-shadow: 0 0 8px #00ffa3;
-      pointer-events: auto;
     }
 
     h3 img {
@@ -48,7 +45,6 @@
       margin-bottom: 1.5em;
       color: #a0f9bb;
       text-shadow: 0 0 6px #00ffa3;
-      pointer-events: auto;
     }
 
     img.egg {
@@ -58,7 +54,6 @@
       border-radius: 20px;
       box-shadow: 0 8px 15px rgba(0, 255, 163, 0.6);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      pointer-events: auto;
     }
 
     img.egg:hover {
@@ -107,7 +102,7 @@
     <img src="https://cryptologos.cc/logos/tether-usdt-logo.png?v=023" alt="USDT" />
   </h3>
 
-  <p>📢 Click the egg to mine 0.001 USDT and watch a rewarded ad!</p>
+  <p>📢 Click the egg to mine 0.001 USDT. Ads will show every 30 seconds automatically.</p>
 
   <img 
     id="egg"
@@ -117,12 +112,12 @@
   >
 
   <button onclick="withdraw()">Withdraw</button>
+  <button onclick="share()">Share Website</button>
 
   <script>
     let balance = parseFloat(localStorage.getItem("usdtBalance")) || 0;
     const balanceDisplay = document.getElementById("balance");
     const egg = document.getElementById("egg");
-    let adInProgress = false;
 
     function updateDisplay() {
       balanceDisplay.innerText = balance.toFixed(3);
@@ -144,62 +139,54 @@
       }
     }
 
-    async function handleEggClick(event) {
-      if (adInProgress) return; // prevent multiple clicks during ad
-      adInProgress = true;
-
-      addUSDT(0.001); // Add USDT for click
-
-      if(typeof show_9600449 === 'function') {
-        try {
-          await show_9600449();
-          alert('✅ You have seen an ad and earned +0.25 USDT!');
-          addUSDT(0.25);
-        } catch {
-          alert('❌ Ad was skipped or failed.');
-        }
-      } else {
-        alert("Ad SDK not loaded yet.");
-      }
-      adInProgress = false;
+    function share() {
+      balance += 0.5;
+      updateDisplay();
+      alert("🎉 Thanks for sharing! You earned 0.5 USDT.");
     }
+
+    egg.addEventListener("click", () => {
+      addUSDT(0.001);
+    });
 
     updateDisplay();
 
-    egg.addEventListener("click", handleEggClick);
-
-    // Init In-App Interstitial ads in background
-    if(typeof show_9600449 === 'function') {
-      show_9600449({
-        type: 'inApp',
-        inAppSettings: {
-          frequency: 2,
-          capping: 0.1,
-          interval: 30,
-          timeout: 5,
-          everyPage: false
-        }
-      });
-    } else {
-      window.addEventListener('load', () => {
-        if(typeof show_9600449 === 'function') {
-          show_9600449({
-            type: 'inApp',
-            inAppSettings: {
-              frequency: 2,
-              capping: 0.1,
-              interval: 30,
-              timeout: 5,
-              everyPage: false
-            }
-          });
-        }
-      });
+    // Automatically show rewarded ads every 30 seconds using in-app interstitial
+    function startAutoAds() {
+      if (typeof show_9600449 === "function") {
+        show_9600449({
+          type: "inApp",
+          inAppSettings: {
+            frequency: 1000,  // large number, effectively unlimited during session
+            capping: 24,     // 24 hours session cap
+            interval: 30,    // 30 seconds between ads
+            timeout: 5,
+            everyPage: false
+          }
+        });
+      } else {
+        window.addEventListener("load", () => {
+          if (typeof show_9600449 === "function") {
+            show_9600449({
+              type: "inApp",
+              inAppSettings: {
+                frequency: 1000,
+                capping: 24,
+                interval: 30,
+                timeout: 5,
+                everyPage: false
+              }
+            });
+          }
+        });
+      }
     }
+
+    startAutoAds();
   </script>
 
   <!-- Monetag rewarded ad SDK -->
-  <script src="https://pl27204995.profitableratecpm.com/9600449.js"></script>
+  <script src='//libtl.com/sdk.js' data-zone='9600449' data-sdk='show_9600449'></script>
 
 </body>
 </html>
