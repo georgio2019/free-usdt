@@ -36,8 +36,9 @@
     }
 
     h3 img {
-      width: 28px;
-      height: 28px;
+      width: 20px;      /* Smaller size for the small egg next to balance */
+      height: 20px;
+      vertical-align: middle;
     }
 
     p {
@@ -104,19 +105,19 @@
   <h3>
     💰 Balance: <span id="balance">0.000</span>
     <img 
-    id="egg"
-    src="pngwing.com.png" 
-    alt="Egg"
-    class="egg"
-  >
+      id="egg"
+      src="pngwing.com.png" 
+      alt="Egg"
+      class="egg-small"
+    >
   </h3>
 
   <p>📢 watch reward ad <strong>+1 Egg coin🦖</strong> instantly!</p>
 
   <img 
-  
     src="pngwing.com.png" 
-   
+    alt="Big Egg"
+    class="egg"
   >
 
   <button onclick="withdraw()">Withdraw</button>
@@ -125,7 +126,7 @@
   <script>
     let balance = parseFloat(localStorage.getItem("usdtBalance")) || 0;
     const balanceDisplay = document.getElementById("balance");
-    const egg = document.getElementById("egg");
+    const egg = document.querySelector("img.egg"); // big egg for clicking to add
 
     function updateDisplay() {
       balanceDisplay.innerText = balance.toFixed(3);
@@ -143,7 +144,7 @@
         balance = 0;
         updateDisplay();
       } else {
-        alert("🚫 the wihtdrawl will be added in the future.");
+        alert("🚫 the withdrawal will be added in the future.");
       }
     }
 
@@ -191,5 +192,4 @@
   <script src='//libtl.com/sdk.js' data-zone='9600449' data-sdk='show_9600449'></script>
 </body>
 </html>
-
 
