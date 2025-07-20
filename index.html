@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>USDT Mining</title>
   <style>
-    /* (All your existing styles unchanged) */
     body {
       margin: 0;
       height: 100vh;
@@ -72,7 +71,7 @@
       border: none;
       border-radius: 30px;
       padding: 14px 32px;
-      margin-top: 12px;
+      margin: 8px;
       font-size: 1.1rem;
       font-weight: 600;
       color: #0f2027;
@@ -103,7 +102,7 @@
     <img src="your-usdt-icon.png" alt="USDT" />
   </h3>
 
-  <p>📢 Share the website to get <strong>+0.5 USDT</strong> instantly!</p>
+  <p>⛏️ Tap the egg to mine. Watch ads for bonus!</p>
 
   <img 
     id="egg"
@@ -113,7 +112,6 @@
   >
 
   <button onclick="withdraw()">Withdraw</button>
-  <button onclick="share()">Share Website</button>
   <button onclick="showRewardAd()">🎁 Reward</button>
 
   <script>
@@ -141,12 +139,6 @@
       }
     }
 
-    function share() {
-      balance += 0.5;
-      updateDisplay();
-      alert("🎉 Thanks for sharing! You earned 0.5 USDT.");
-    }
-
     function showRewardAd() {
       show_9599968().then(() => {
         alert('✅ You have seen an ad and earned +0.25 USDT!');
@@ -161,7 +153,7 @@
     updateDisplay();
   </script>
 
-  <!-- Monetag rewarded ad script (replace with your script link if different) -->
+  <!-- Monetag rewarded ad script -->
   <script src="https://pl27204995.profitableratecpm.com/9599968.js"></script>
 
 </body>
