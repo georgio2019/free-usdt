@@ -1,40 +1,45 @@
 
-
-
-function share() {
-  const shareUrl = window.location.href;
-  const shareText = "Check out this USDT Mining site and earn rewards!";
+let balance = 0;
 let clickCount = 0;
-let adIndex = 0;
 
+function updateDisplay() {
+  document.getElementById("balance").innerText = balance.toFixed(3);
+}
 
-function eggClicked() {
+function addUSDT() {
   clickCount++;
-  // Other logic like increasing balance...
+  balance += 0.001;
+  updateDisplay();
+}
 
-  if (clickCount % 20 === 0 && adIndex < adLinks.length) {
-    window.open(adLinks[adIndex], "_blank");
-    adIndex++;
+function withdraw() {
+  if (balance >= 15) {
+    window.open("https://www.profitableratecpm.com/ycgu0idvy?key=e8e724900b9daaaef26d9cf1bbd26b09", "_blank");
+    balance = 0;
+    updateDisplay();
+  } else {
+    alert("🚫 You need at least 15 USDT to withdraw.");
   }
 }
 
+function share() {
   if (navigator.share) {
     navigator.share({
       title: 'USDT Mining',
-      text: shareText,
-      url: shareUrl,
+      text: 'Check out this USDT Mining site and earn rewards!',
+      url: window.location.href
     })
     .then(() => {
-      // User confirmed share
       balance += 0.5;
       updateDisplay();
       alert("🎉 Thanks for sharing! You earned 0.5 USDT.");
     })
     .catch(() => {
-      // User cancelled or share failed
-      alert("Share cancelled or failed, no reward given.");
+      alert("Share cancelled, no reward.");
     });
   } else {
-    alert("Sharing not supported on this device/browser. Unable to confirm share, so no reward.");
+    alert("Sharing not supported on this device.");
   }
 }
+
+updateDisplay();
