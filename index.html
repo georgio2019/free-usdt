@@ -116,9 +116,7 @@
   >
 
   <button onclick="withdraw()">Withdraw</button>
-  <button onclick="share()">Share Website</button>
   <button onclick="showRewardedPopup()">🎁 Watch Reward Ad</button>
-  <button onclick="testAd()">🔍 Test Ad Manually</button>
 
   <script>
     let balance = parseFloat(localStorage.getItem("usdtBalance")) || 0;
@@ -145,12 +143,6 @@
       }
     }
 
-    function share() {
-      balance += 0.5;
-      updateDisplay();
-      alert("🎉 Thanks for sharing! You earned 0.5 USDT.");
-    }
-
     // Show rewarded popup ad
     function showRewardedPopup() {
       if (typeof show_9600449 === "function") {
@@ -166,28 +158,15 @@
       }
     }
 
-    // Test ad manually (simple interstitial)
-    function testAd() {
-      if (typeof show_9600449 === "function") {
-        show_9600449().then(() => {
-          alert("Ad watched successfully!");
-        }).catch(() => {
-          alert("Ad failed or was skipped.");
-        });
-      } else {
-        alert("Ad SDK not loaded.");
-      }
-    }
-
     // Auto show interstitial ad every 30 seconds
     function startAutoAds() {
       if (typeof show_9600449 === "function") {
         show_9600449({
           type: "inApp",
           inAppSettings: {
-            frequency: 1000,  // high number to not limit
-            capping: 24,      // 24 hours session
-            interval: 30,     // every 30 seconds
+            frequency: 1000,
+            capping: 24,
+            interval: 30,
             timeout: 5,
             everyPage: false
           }
@@ -201,12 +180,12 @@
 
     updateDisplay();
 
-    // Start automatic interstitial ads, but delay 10 seconds after page load to avoid early ad-blocking
     setTimeout(startAutoAds, 10000);
   </script>
 
-  <!-- Monetag rewarded ad script (replace with your own) -->
+  <!-- Monetag rewarded ad script -->
   <script src='//libtl.com/sdk.js' data-zone='9600449' data-sdk='show_9600449'></script>
 </body>
 </html>
+
 
