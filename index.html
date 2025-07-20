@@ -54,6 +54,8 @@
       border-radius: 20px;
       box-shadow: 0 8px 15px rgba(0, 255, 163, 0.6);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      z-index: 10;
+      position: relative;
     }
 
     img.egg:hover {
@@ -78,6 +80,8 @@
       box-shadow: 0 8px 15px rgba(0, 255, 163, 0.3);
       cursor: pointer;
       transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+      z-index: 10;
+      position: relative;
     }
 
     button:hover {
@@ -102,7 +106,7 @@
     <img src="https://cryptologos.cc/logos/tether-usdt-logo.png?v=023" alt="USDT" />
   </h3>
 
-  <p>📢 Click the egg to mine 0.001 USDT. Ads will show every 30 seconds automatically.</p>
+  <p>📢 Share the website to get <strong>+0.5 USDT</strong> instantly!</p>
 
   <img 
     id="egg"
@@ -113,6 +117,8 @@
 
   <button onclick="withdraw()">Withdraw</button>
   <button onclick="share()">Share Website</button>
+  <button onclick="showRewardedPopup()">🎁 Watch Reward Ad</button>
+  <button onclick="testAd()">🔍 Test Ad Manually</button>
 
   <script>
     let balance = parseFloat(localStorage.getItem("usdtBalance")) || 0;
@@ -124,8 +130,8 @@
       localStorage.setItem("usdtBalance", balance.toFixed(3));
     }
 
-    function addUSDT(amount) {
-      balance += amount;
+    function addUSDT() {
+      balance += 0.001;
       updateDisplay();
     }
 
@@ -145,50 +151,62 @@
       alert("🎉 Thanks for sharing! You earned 0.5 USDT.");
     }
 
-    egg.addEventListener("click", () => {
-      addUSDT(0.001);
-    });
+    // Show rewarded popup ad
+    function showRewardedPopup() {
+      if (typeof show_9600449 === "function") {
+        show_9600449('pop').then(() => {
+          alert("✅ Thanks for watching! You earned +0.25 USDT.");
+          balance += 0.25;
+          updateDisplay();
+        }).catch(() => {
+          alert("❌ Ad failed or was skipped.");
+        });
+      } else {
+        alert("Ad SDK not loaded.");
+      }
+    }
 
-    updateDisplay();
+    // Test ad manually (simple interstitial)
+    function testAd() {
+      if (typeof show_9600449 === "function") {
+        show_9600449().then(() => {
+          alert("Ad watched successfully!");
+        }).catch(() => {
+          alert("Ad failed or was skipped.");
+        });
+      } else {
+        alert("Ad SDK not loaded.");
+      }
+    }
 
-    // Automatically show rewarded ads every 30 seconds using in-app interstitial
+    // Auto show interstitial ad every 30 seconds
     function startAutoAds() {
       if (typeof show_9600449 === "function") {
         show_9600449({
           type: "inApp",
           inAppSettings: {
-            frequency: 1000,  // large number, effectively unlimited during session
-            capping: 24,     // 24 hours session cap
-            interval: 30,    // 30 seconds between ads
+            frequency: 1000,  // high number to not limit
+            capping: 24,      // 24 hours session
+            interval: 30,     // every 30 seconds
             timeout: 5,
             everyPage: false
           }
-        });
-      } else {
-        window.addEventListener("load", () => {
-          if (typeof show_9600449 === "function") {
-            show_9600449({
-              type: "inApp",
-              inAppSettings: {
-                frequency: 1000,
-                capping: 24,
-                interval: 30,
-                timeout: 5,
-                everyPage: false
-              }
-            });
-          }
+        }).catch(err => {
+          console.error("Auto ad failed:", err);
         });
       }
     }
 
-    startAutoAds();
+    egg.addEventListener("click", addUSDT);
+
+    updateDisplay();
+
+    // Start automatic interstitial ads, but delay 10 seconds after page load to avoid early ad-blocking
+    setTimeout(startAutoAds, 10000);
   </script>
 
-  <!-- Monetag rewarded ad SDK -->
+  <!-- Monetag rewarded ad script (replace with your own) -->
   <script src='//libtl.com/sdk.js' data-zone='9600449' data-sdk='show_9600449'></script>
-
 </body>
 </html>
-
 
