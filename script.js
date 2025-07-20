@@ -1,13 +1,10 @@
-
 let balance = 0;
-let clickCount = 0;
 
 function updateDisplay() {
   document.getElementById("balance").innerText = balance.toFixed(3);
 }
 
 function addUSDT() {
-  clickCount++;
   balance += 0.001;
   updateDisplay();
 }
