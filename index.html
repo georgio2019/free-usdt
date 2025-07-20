@@ -6,136 +6,53 @@
 
   <meta charset="UTF-8" />
 
-<script src="https://fpyf8.com/88/tag.min.js" data-zone="158320" async data-cfasync="false"></script>
+<script>
+  let balance = 0;
+  let clickCount = 0;
 
+  function updateDisplay() {
+    document.getElementById("balance").innerText = balance.toFixed(3);
+  }
 
-</div>
+  function addUSDT() {
+    clickCount++;
+    balance += 0.001;
+    updateDisplay();
+  }
 
+  function withdraw() {
+    if (balance >= 15) {
+      window.open("https://www.profitableratecpm.com/ycgu0idvy?key=e8e724900b9daaaef26d9cf1bbd26b09", "_blank");
+      balance = 0;
+      updateDisplay();
+    } else {
+      alert("🚫 You need at least 15 USDT to withdraw.");
+    }
+  }
 
-  <title>USDT Mining</title>
-  <style>
-    .top-banner-ad {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px auto;
-  width: 100%;
-  max-width: 200px; /* 🔽 change this to control size */
-  height: auto;
-}
+  function share() {
+    if (navigator.share) {
+      navigator.share({
+        title: 'USDT Mining',
+        text: 'Check out this USDT Mining site and earn rewards!',
+        url: window.location.href
+      })
+      .then(() => {
+        balance += 0.5;
+        updateDisplay();
+        alert("🎉 Thanks for sharing! You earned 0.5 USDT.");
+      })
+      .catch(() => {
+        alert("Share cancelled, no reward.");
+      });
+    } else {
+      alert("Sharing not supported on this device.");
+    }
+  }
 
+  updateDisplay();
+</script>
 
-    body {
-      margin: 0;
-      height: 100vh;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #2c5364, #203a43, #0f2027);
-      color: #f0f0f0;
-      text-align: center;
-    }
-    h1 {
-      margin-bottom: 0.3em;
-      font-weight: 700;
-      font-size: 2.8rem;
-      text-shadow: 0 0 10px #00ffa3, 0 0 20px #00ffa3;
-    }
-    h3 {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 1.4rem;
-      margin-bottom: 0.5em;
-      text-shadow: 0 0 8px #00ffa3;
-    }
-    h3 img {
-      width: 28px;
-      height: 28px;
-    }
-    p {
-      font-size: 1rem;
-      margin-bottom: 1.5em;
-      color: #a0f9bb;
-      text-shadow: 0 0 6px #00ffa3;
-    }
-    img.egg {
-      width: 250px;
-      height: 250px;
-      cursor: pointer;
-      border-radius: 20px;
-      box-shadow: 0 8px 15px rgba(0, 255, 163, 0.6);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    img.egg:hover {
-      transform: scale(1.05);
-      box-shadow: 0 12px 25px rgba(0, 255, 163, 0.9);
-    }
-    img.egg:active {
-      transform: scale(0.95);
-      box-shadow: 0 4px 10px rgba(0, 255, 163, 0.5);
-    }
-    button {
-      background: #00ffa3;
-      border: none;
-      border-radius: 30px;
-      padding: 14px 32px;
-      margin-top: 12px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #0f2027;
-      box-shadow: 0 8px 15px rgba(0, 255, 163, 0.3);
-      cursor: pointer;
-      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-    }
-    button:hover {
-      background: #00cc7a;
-      box-shadow: 0 12px 25px rgba(0, 204, 122, 0.5);
-      transform: translateY(-3px);
-    }
-    button:active {
-      background: #009a55;
-      box-shadow: 0 4px 12px rgba(0, 154, 85, 0.7);
-      transform: translateY(0);
-    }
-    #adModal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.75);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-    }
-    #adContent {
-      background: #0f2027;
-      padding: 20px 30px;
-      border-radius: 10px;
-      color: #00ffa3;
-      text-align: center;
-      max-width: 300px;
-      box-shadow: 0 0 15px #00ffa3;
-      font-size: 1.2rem;
-    }
-    #closeAdBtn {
-      margin-top: 20px;
-      padding: 8px 25px;
-      border: none;
-      background: #00cc7a;
-      color: #0f2027;
-      font-weight: 600;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    #closeAdBtn:hover {
-      background: #009a55;
-    }
-  </style>
 </head>
 <body>
 
