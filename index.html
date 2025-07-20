@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta name="monetag" content="5c40084520c794e72b76efa3bfc5c889"/>
+
+<!-- Add script to your app -->
+
+<html>
+   
+        ...
+        <script src='//libtl.com/sdk.js' data-zone='9599968' data-sdk='show_9599968'></script>
+ 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <meta charset="UTF-8" />
@@ -14,16 +21,7 @@
 
   <title>USDT Mining</title>
   <style>
-    .top-banner-ad {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px auto;
-  width: 100%;
-  max-width: 200px; /* 🔽 change this to control size */
-  height: auto;
-}
-
+ 
 
     body {
       margin: 0;
@@ -102,39 +100,7 @@
       box-shadow: 0 4px 12px rgba(0, 154, 85, 0.7);
       transform: translateY(0);
     }
-    #adModal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.75);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-    }
-    #adContent {
-      background: #0f2027;
-      padding: 20px 30px;
-      border-radius: 10px;
-      color: #00ffa3;
-      text-align: center;
-      max-width: 300px;
-      box-shadow: 0 0 15px #00ffa3;
-      font-size: 1.2rem;
-    }
-    #closeAdBtn {
-      margin-top: 20px;
-      padding: 8px 25px;
-      border: none;
-      background: #00cc7a;
-      color: #0f2027;
-      font-weight: 600;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    #closeAdBtn:hover {
-      background: #009a55;
-    }
+  
   </style>
 </head>
 <body>
@@ -216,6 +182,29 @@
   "https://www.profitableratecpm.com/fszq8xm5?key=0628e787034b43b71151c9598974a39f",
   "https://www.profitableratecpm.com/hhc2cwhkj?key=1ddf4c39898a4f9583cdde049f684bb8"
 ];
+  
+
+// Rewarded interstitial
+
+show_9599968().then(() => {
+    // You need to add your user reward function here, which will be executed after the user watches the ad.
+    // For more details, please refer to the detailed instructions.
+    alert('You have seen an ad!');
+})
+
+     
+
+// Rewarded Popup
+
+show_9599968('pop').then(() => {
+    // user watch ad till the end or close it in interstitial format
+    // your code to reward user for rewarded format
+}).catch(e => {
+    // user get error during playing ad
+    // do nothing or whatever you want
+})
+
+           
 
   function updateDisplay() {
     document.getElementById("balance").innerText = balance.toFixed(3);
@@ -235,6 +224,8 @@
     }
   }
 
+
+  
   function withdraw() {
     if (balance >= 15) {
       if (adViews >= 50) {
@@ -268,6 +259,32 @@
       alert("Sharing not supported on this device.");
     }
   }
+
+
+// In-App Interstitial
+
+show_9599968({
+  type: 'inApp',
+  inAppSettings: {
+    frequency: 2,
+    capping: 0.1,
+    interval: 30,
+    timeout: 5,
+    everyPage: false
+  }
+})
+
+/*
+This value is decoded as follows:
+- show automatically 2 ads
+  within 0.1 hours (6 minutes)
+  with a 30-second interval between them
+  and a 5-second delay before the first one is shown.
+  The last digit, 0, means that the session will be saved when you navigate between pages.
+  If you set the last digit as 1, then at any transition between pages,
+  the session will be reset, and the ads will start again.
+*/
+
 
   updateDisplay();
 </script>
