@@ -55,10 +55,12 @@
       box-shadow: 0 8px 15px rgba(0, 255, 163, 0.6);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
     img.egg:hover {
       transform: scale(1.05);
       box-shadow: 0 12px 25px rgba(0, 255, 163, 0.9);
     }
+
     img.egg:active {
       transform: scale(0.95);
       box-shadow: 0 4px 10px rgba(0, 255, 163, 0.5);
@@ -77,11 +79,13 @@
       cursor: pointer;
       transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
     }
+
     button:hover {
       background: #00cc7a;
       box-shadow: 0 12px 25px rgba(0, 204, 122, 0.5);
       transform: translateY(-3px);
     }
+
     button:active {
       background: #009a55;
       box-shadow: 0 4px 12px rgba(0, 154, 85, 0.7);
@@ -101,20 +105,23 @@
   <p>📢 Share the website to get <strong>+0.5 USDT</strong> instantly!</p>
 
   <img 
+    id="egg"
     src="pngwing.com.png" 
     alt="Egg"
     class="egg"
-    onclick="addUSDT()"
   >
 
   <button onclick="withdraw()">Withdraw</button>
   <button onclick="share()">Share Website</button>
 
   <script>
-    let balance = 0;
+    let balance = parseFloat(localStorage.getItem("usdtBalance")) || 0;
+    const balanceDisplay = document.getElementById("balance");
+    const egg = document.getElementById("egg");
 
     function updateDisplay() {
-      document.getElementById("balance").innerText = balance.toFixed(3);
+      balanceDisplay.innerText = balance.toFixed(3);
+      localStorage.setItem("usdtBalance", balance.toFixed(3));
     }
 
     function addUSDT() {
@@ -137,6 +144,8 @@
       updateDisplay();
       alert("🎉 Thanks for sharing! You earned 0.5 USDT.");
     }
+
+    egg.addEventListener("click", addUSDT);
 
     updateDisplay();
   </script>
