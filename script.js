@@ -5,6 +5,15 @@ function share() {
   const shareUrl = window.location.href;
   const shareText = "Check out this USDT Mining site and earn rewards!";
 
+
+function eggClicked() {
+  clickCount++;
+  // Other logic like increasing balance...
+
+  if (clickCount % 20 === 0 && adIndex < adLinks.length) {
+    window.open(adLinks[adIndex], "_blank");
+    adIndex++;
+  }
 }
 
   if (navigator.share) {
